@@ -8,6 +8,9 @@ from users.permissions import IsAdmin
 class PatientListCreateView(generics.ListCreateAPIView):
     queryset = Patient.objects.all()
     permission_classes = [IsAuthenticated, IsAdminOrDoctorForPatients]
+    search_fields = ['first_name', 'middle_name', 'last_name', 'national_number', 'phone_number', 'current_residence']
+    ordering_fields = ['first_name', 'last_name', 'birth_date', 'created_at']
+    filterset_fields = ['gender', 'marital_status', 'home_status']
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
@@ -30,6 +33,9 @@ class PatientDetailView(generics.RetrieveUpdateDestroyAPIView):
 class FamilyMemberListCreateView(generics.ListCreateAPIView):
     serializer_class = FamilyMemberSerializer
     permission_classes = [IsAuthenticated, IsAdminOrDoctorForPatients]
+    search_fields = ['full_name']
+    ordering_fields = ['full_name']
+    filterset_fields = ['relation', 'gender']
 
     def get_queryset(self):
         return FamilyMember.objects.filter(patient_id=self.kwargs['patient_pk'])

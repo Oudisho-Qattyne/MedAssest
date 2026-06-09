@@ -18,13 +18,21 @@ class AidRequestProviderSerializer(serializers.ModelSerializer):
 class AidRequestSerializer(serializers.ModelSerializer):
     providers = AidRequestProviderSerializer(many=True, read_only=True)
     patient_full_name = serializers.ReadOnlyField(source='patient.__str__')
-    request_type_name = serializers.ReadOnlyField(source='aid_request_type.type_name')
     total_provided_amount = serializers.SerializerMethodField()
 
     class Meta:
         model = AidRequest
         fields = '__all__'
         read_only_fields = ['id']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.aid_request_type:
+            data['aid_request_type'] = {
+                'id': instance.aid_request_type.id,
+                'type_name': instance.aid_request_type.type_name
+            }
+        return data
 
     def get_total_provided_amount(self, obj):
         """

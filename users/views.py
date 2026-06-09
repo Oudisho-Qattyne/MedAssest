@@ -9,7 +9,10 @@ class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsAdmin]
     serializer_class = UserCreateSerializer  # POST uses create
-    # For GET, use different serializer
+    search_fields = ['full_name', 'email']
+    ordering_fields = ['full_name', 'email', 'created_at']
+    filterset_fields = ['role']
+
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return UserSerializer

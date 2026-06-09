@@ -12,6 +12,8 @@ class RequestTypeListCreateView(generics.ListCreateAPIView):
     queryset = AidRequestType.objects.all()
     serializer_class = AidRequestTypeSerializer
     permission_classes = [IsAuthenticated, IsDoctorOrAdminForRequests]
+    search_fields = ['type_name', 'description']
+    ordering_fields = ['type_name']
 
 class RequestTypeDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AidRequestType.objects.all()
@@ -20,6 +22,9 @@ class RequestTypeDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class AidRequestListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated, IsDoctorOrAdminForRequests]
+    search_fields = ['description', 'place_of_aid']
+    ordering_fields = ['date_of_aid', 'estimated_cost', 'id']
+    filterset_fields = ['request_status', 'patient', 'aid_request_type', 'date_of_aid']
 
     def get_queryset(self):
         # Prefetch providers to avoid N+1 when calculating total_provided_amount
@@ -55,6 +60,9 @@ class AidRequestDetailView(generics.RetrieveUpdateDestroyAPIView):
 class AidRequestProviderListCreateView(generics.ListCreateAPIView):
     serializer_class = AidRequestProviderSerializer
     permission_classes = [IsAuthenticated, IsDoctorOrAdminForRequests]
+    search_fields = ['notes']
+    ordering_fields = ['aid_amount']
+    filterset_fields = ['aid_type', 'type_of_aid_amount', 'aid_provider']
 
     def get_queryset(self):
         return AidRequestProvider.objects.filter(aid_request_id=self.kwargs['request_pk'])
