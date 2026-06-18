@@ -36,7 +36,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173"
 ]
 
-# Application definition
+# Application definition 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -98,10 +98,16 @@ WSGI_APPLICATION = 'MedAssest.wsgi.application'
 
 load_dotenv(BASE_DIR / '.env')
 
-DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+# DATABASES = { للرفع تم استبدال هذا الكود
+#     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+# }
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
+        conn_max_age=600
+    )
+}
 
 # DATABASES = {
 #     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
