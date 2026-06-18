@@ -8,5 +8,4 @@ django-cors-headers==4.1.0
 setuptools>=75.0.0
 python-dotenv==1.0.1
 dj-database-url==2.2.0
-whitenoise
-setuptools==69.5.1
+whitenoise>=6.12.0
