@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ["*"]
 # CORS & INTEGRATION
 # ==========================================
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5174",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://charity-fund-frontend.vercel.app",
@@ -95,18 +96,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.parse(
-        os.environ.get('DATABASE_URL'), 
-        ssl_require=True
-    )
-
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.parse(
-        os.environ.get('DATABASE_URL'), 
-        ssl_require=True
-    )
+            # 'postgresql://postgres.vjdkiflcwiqsatkvwtaa:Stelianweek12345678@aws-1-eu-central-1.pooler.supabase.com:5432/postgres',
+            os.environ.get('DATABASE_URL'), 
+            ssl_require=True
+        )
 
 # ==========================================
 # PASSWORD VALIDATION

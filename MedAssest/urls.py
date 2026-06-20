@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import CustomTokenObtainPairView
+from .views import CustomTokenObtainPairView, export_excel
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/patients/', include('patients.urls')),
     path('api/aid-providers/', include('aid_providers.urls')),
     path('api/aid-requests/', include('aid_requests.urls')),
+    path('api/export/excel/', export_excel, name='export_excel'),
 ]
