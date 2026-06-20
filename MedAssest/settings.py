@@ -98,7 +98,6 @@ DATABASES = {
 }
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.parse(
-            # 'postgresql://postgres.vjdkiflcwiqsatkvwtaa:Stelianweek12345678@aws-1-eu-central-1.pooler.supabase.com:5432/postgres',
             os.environ.get('DATABASE_URL'), 
             ssl_require=True
         )
